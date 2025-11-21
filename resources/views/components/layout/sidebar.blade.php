@@ -84,8 +84,8 @@
         </li>
 
         <!-- Categories -->
-        <li class="menu-item">
-            <a href="#" class="menu-link">
+        <li class="menu-item {{ request()->routeIs('categories.*') ? 'active' : '' }}">
+            <a href="{{ route('categories.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-category"></i>
                 <div data-i18n="Categories">Categories</div>
             </a>
