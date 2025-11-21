@@ -3,11 +3,23 @@
 @section('content')
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Products List</h5>
+        <div class="mb-3 text-left">
+        <label for="nama" class="form-label">Search product..</label>
+                <input
+                    type="text"
+                    class="form-control @error('nama') is-invalid @enderror"
+                    id="search"
+                    name="search"
+                    placeholder="Enter product name"
+                    required
+                />
+        </div>
         <a href="{{ route('products.create') }}" class="btn btn-primary">
             <i class="bx bx-plus me-1"></i> Add Product
         </a>
     </div>
+
+    
 
     @if(session('success'))
         <div class="alert alert-success alert-dismissible mx-4 mt-3" role="alert">
@@ -53,23 +65,16 @@
                             @endif
                         </td>
                         <td>
-                            <div class="dropdown">
-                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                    <i class="bx bx-dots-vertical-rounded"></i>
+                            <a class="dropdown-item" href="{{ route('products.edit', $product->id) }}">
+                                <i class="bx bx-edit-alt me-1"></i> Edit
+                            </a>
+                            <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to delete this product?')">
+                                    <i class="bx bx-trash me-1"></i> Delete
                                 </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="{{ route('products.edit', $product->id) }}">
-                                        <i class="bx bx-edit-alt me-1"></i> Edit
-                                    </a>
-                                    <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="dropdown-item" onclick="return confirm('Are you sure you want to delete this product?')">
-                                            <i class="bx bx-trash me-1"></i> Delete
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
+                            </form>
                         </td>
                     </tr>
                 @empty
@@ -82,3 +87,19 @@
     </div>
 </div>
 @endsection
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$(document).ready(function () {
+    $("#search").on("keyup", function () {
+        let value = $(this).val().toLowerCase();
+
+        $("table tbody tr").filter(function () {
+            $(this).toggle(
+                $(this).text().toLowerCase().indexOf(value) > -1
+            );
+        });
+    });
+});
+</script>

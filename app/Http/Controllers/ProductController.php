@@ -11,7 +11,13 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('category')->latest()->get();
+        $products = Product::with('category')
+            ->when(request('search'), function($query) {
+                $query->where('nama', 'like', '%' . request('search') . '%');
+            })
+            ->latest()
+            ->paginate(10);
+
         $breadcrumbs = [
             ['title' => 'Dashboard', 'url' => route('dashboard')],
             ['title' => 'Products', 'url' => '']
@@ -102,4 +108,18 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $products = Product::where('nama', 'LIKE', '%' . $query . '%')
+                           // Eager load category to ensure 'category.nama' is available for JSON
+                           ->with('category') 
+                           ->get();
+
+        // Return the collection as a JSON response
+        return response()->json($products);
+    }
+
 }

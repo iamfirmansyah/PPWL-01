@@ -3,7 +3,18 @@
 @section('content')
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Categories List</h5>
+        
+        <div class="mb-3 text-left">
+            <label for="nama" class="form-label">Search Category..</label>
+                    <input
+                        type="text"
+                        class="form-control @error('nama') is-invalid @enderror"
+                        id="search"
+                        name="search"
+                        placeholder="Enter Category name"
+                        required
+                    />
+            </div>
         <a href="{{ route('categories.create') }}" class="btn btn-primary">
             <i class="bx bx-plus me-1"></i> Add Category
         </a>
@@ -86,3 +97,19 @@ function deleteConfirm(id) {
 }
 </script>
 @endpush
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$(document).ready(function () {
+    $("#search").on("keyup", function () {
+        let value = $(this).val().toLowerCase();
+
+        $("table tbody tr").filter(function () {
+            $(this).toggle(
+                $(this).text().toLowerCase().indexOf(value) > -1
+            );
+        });
+    });
+});
+</script>

@@ -19,6 +19,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('products', ProductController::class);
+    Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
     Route::resource('categories', CategoryController::class);
 });
 
