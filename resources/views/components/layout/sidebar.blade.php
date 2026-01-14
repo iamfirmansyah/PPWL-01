@@ -92,18 +92,10 @@
         </li>
 
         <!-- Orders -->
-        <li class="menu-item">
-            <a href="#" class="menu-link">
+        <li class="menu-item {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
+            <a href="{{ route('admin.orders.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-shopping-bag"></i>
                 <div data-i18n="Orders">Orders</div>
-            </a>
-        </li>
-
-        <!-- Users -->
-        <li class="menu-item">
-            <a href="#" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user"></i>
-                <div data-i18n="Users">Users</div>
             </a>
         </li>
     </ul>

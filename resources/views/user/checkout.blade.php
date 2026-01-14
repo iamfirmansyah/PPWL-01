@@ -50,17 +50,17 @@
                     @csrf
                     <div class="mb-3">
                         <label for="nama" class="form-label">Nama Lengkap</label>
-                        <input type="text" name="nama" id="nama" class="form-control" required>
+                        <input type="text" name="nama" id="nama" class="form-control" value="{{ auth()->user()->name }}" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="alamat" class="form-label">Alamat Pengiriman</label>
-                        <textarea name="alamat" id="alamat" class="form-control" rows="3" required></textarea>
+                        <textarea name="alamat" id="alamat" class="form-control" rows="3" required>{{ auth()->user()->alamat }}</textarea>
                     </div>
 
                     <div class="mb-3">
                         <label for="telepon" class="form-label">No. Telepon</label>
-                        <input type="text" name="telepon" id="telepon" class="form-control" required>
+                        <input type="text" name="telepon" id="telepon" class="form-control" value="{{ auth()->user()->telepon }}" required>
                     </div>
 
                     <div class="mb-3">
